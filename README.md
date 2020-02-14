@@ -1,6 +1,8 @@
 # astrak-api
 
-#### Мы используем REST в API.
+### Мы используем REST архитектуру в API.
+
+Актуальный адрес тестового API: https://u0_a83-qkw6.localhost.run/
 
 ## Работа с Callback для получения событий
 
