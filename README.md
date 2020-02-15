@@ -2,7 +2,7 @@
 
 ### Мы используем REST архитектуру в API.
 
-Актуальный адрес тестового API: https://u0_a83-n6dh.localhost.run
+Актуальный адрес тестового API: http://afternoon-dusk-97603.herokuapp.com/
 
 ## Работа с Callback для получения событий
 
