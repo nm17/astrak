@@ -129,4 +129,13 @@ Body запроса:
 | token | String | Токен пользователя                   |
 | id    | Number | ID пользователя с кем ведется диалог |
 
+## SDK 
 
+### Python SDK
+
+* [Асинхронная библиотека aioastrak](https://github.com/kesha1225/aioastrak)
+* [Асинхронная библиотека astrakpy](https://github.com/triedgriefdev/astrakpy)
+
+### NodeJS SDK
+
+* [Стандартная библиотека node-astrak](https://github.com/catofsof/node-astrak)
