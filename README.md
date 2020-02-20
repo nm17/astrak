@@ -1,5 +1,8 @@
 # astrak-api
 
+[![HitCount](http://hits.dwyl.com/catofsof/astrak.svg)](http://hits.dwyl.com/catofsof/astrak)
+<img src = https://build.phonegap.com/apps/3854820/badge/3068423001/android.svg />
+
 ### Мы используем REST архитектуру в API.
 
 Актуальный адрес тестового API: http://afternoon-dusk-97603.herokuapp.com/
