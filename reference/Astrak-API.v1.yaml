@@ -73,7 +73,7 @@ paths:
         description: ''
   /users/register:
     post:
-      summary: ''
+      summary: Зарегистрироваться
       operationId: post-users-register
       responses:
         '200':
@@ -107,7 +107,7 @@ paths:
                 - phone
   /users/login:
     post:
-      summary: ''
+      summary: Зайти в систему
       operationId: post-users-login
       responses:
         '200':
@@ -132,7 +132,7 @@ paths:
       description: Возращает токен пользователя по логину и паролю.
   /users/confirm:
     post:
-      summary: ''
+      summary: Подтвердить аккаунт по смс
       operationId: post-users-confirm
       responses:
         '200':
@@ -153,7 +153,7 @@ paths:
                 - phone
   /users/check:
     get:
-      summary: Your GET endpoint
+      summary: Проверить токен на валидность
       tags: []
       responses: {}
       operationId: get-users-check
@@ -184,7 +184,7 @@ paths:
                 - to
   /messages/dialogs:
     get:
-      summary: Получить сообщения из диалога
+      summary: Получить список диалогов
       tags: []
       responses: {}
       operationId: get-messages-dialogs
@@ -201,7 +201,7 @@ paths:
                 - token
   /messages/dialog:
     get:
-      summary: Your GET endpoint
+      summary: Получить сообщения из диалога
       tags: []
       responses: {}
       operationId: get-messages-dialog
