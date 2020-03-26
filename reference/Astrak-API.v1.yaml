@@ -1,0 +1,246 @@
+openapi: 3.0.0
+info:
+  title: Astrak API
+  version: '1.0'
+  description: 'Обычный мессенджер. '
+servers:
+  - url: 'http://afternoon-dusk-97603.herokuapp.com/'
+    description: Актуальный адрес тестового API
+paths:
+  /events/callback/start:
+    post:
+      summary: Указание Callback для получения событий
+      operationId: post-events-callback-start
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: Токен пользователя
+                callback:
+                  type: string
+                  description: 'URL, на который будут приходить события'
+              required:
+                - token
+                - callback
+        description: ''
+      description: |-
+        Используем URL в формате https://ip:port/ для вашего же удобства. Вам, конечно, никто не запрещает просто написать туда произвольный текст. Но вы сами прекрасно понимаете, что это совсем не имеет смысла.
+
+        Если все успешно, то мы получаем JSON с полем code: 10.
+
+        Поднимаем веб-сервер.
+
+        На ваш ранее указанный URL будут приходить события в POST формате. Вот пример одного из событий:
+
+        {
+          "type": "new_message",
+          "event": {
+            "message_id": 12,
+            "to_id": 1,
+            "from_id": 2,
+            "created_at": 1581110027,
+            "text": "this is a new message!"
+          }
+        }
+
+        При смене URL Callback сервера приходит событие 'callback_deprecated', в котором указаны старый и новый серверы.
+  /events/polling:
+    post:
+      summary: Получение событий с помощью Long Polling
+      operationId: post-events-polling
+      responses:
+        '200':
+          description: OK
+      description: |-
+        Ждем ответ сервера. Как только произойдет какое-либо событие, сервер сразу вернет вам ответ.
+        События приходят одинаковыми как для Callback, так и для Long Polling.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: Токен пользователя
+        description: ''
+  /users/register:
+    post:
+      summary: ''
+      operationId: post-users-register
+      responses:
+        '200':
+          description: OK
+      description: |-
+        Запрос выполняет регистрацию пользователя и возращает актуальный токен.
+
+        Пароль не может быть короче 8 символов.
+
+        Имя пользователя не может быть длиннее 15 символов.
+
+        Если в одном из запросов был введён некорректный номер телефона, то необходимо сделать повторый запрос с тем же логином и паролем, но с другим номером телефона. Придёт сообщение с новым кодом подтвержения. Дальше, как обычно, необходимо подтвердить аккаунт методом /confirm.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: Пароль пользователя
+                username:
+                  type: string
+                  description: Имя пользователя
+                phone:
+                  type: string
+                  description: Номер телефона
+              required:
+                - password
+                - username
+                - phone
+  /users/login:
+    post:
+      summary: ''
+      operationId: post-users-login
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                username:
+                  type: string
+              required:
+                - password
+                - username
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+      description: Возращает токен пользователя по логину и паролю.
+  /users/confirm:
+    post:
+      summary: ''
+      operationId: post-users-confirm
+      responses:
+        '200':
+          description: OK
+      description: Подтверждает аккаунт по смс сообщению.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                phone:
+                  type: string
+              required:
+                - code
+                - phone
+  /users/check:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-users-check
+      description: Запрос проверяет токен на валидность.
+  /messages/send:
+    post:
+      summary: Отправить сообщение пользователю
+      operationId: post-messages-send
+      responses:
+        '200':
+          description: OK
+      description: Отправляет сообщение пользователю.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                text:
+                  type: string
+                to:
+                  type: string
+              required:
+                - token
+                - text
+                - to
+  /messages/dialogs:
+    get:
+      summary: Получить сообщения из диалога
+      tags: []
+      responses: {}
+      operationId: get-messages-dialogs
+      description: Возращает массив со всеми диалогами пользователя.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - token
+  /messages/dialog:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-messages-dialog
+      description: Возращает массив сообщений с конкретным пользователем.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                id:
+                  type: string
+              required:
+                - token
+                - id
+  /messages/delete:
+    post:
+      summary: Удалить сообщение
+      operationId: post-messages-delete
+      responses:
+        '200':
+          description: OK
+      description: Удаляет сообщение по его ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                message_id:
+                  type: string
+                  description: ID сообщения. Обычно приходит в событиях
+              required:
+                - token
+                - message_id
+components:
+  schemas: {}
+  securitySchemes: {}
